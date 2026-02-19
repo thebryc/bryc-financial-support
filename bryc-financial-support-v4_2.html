@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRYC Financial Support Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.typekit.net/oyd0hvb.css">
+<style>
+  :root {
+    --forest: #061b17;
+    --green: #006b56;
+    --green-light: #008a6e;
+    --green-pale: #e6f2ef;
+    --gold: #bf9000;
+    --gold-light: #d4a800;
+    --gold-pale: #fdf6e0;
+    --white: #FFFFFF;
+    --gray-100: #f4f7f6;
+    --gray-200: #e2eae8;
+    --gray-400: #8fa89f;
+    --gray-600: #5a7a72;
+    --gray-800: #2d4a44;
+    --red: #C0392B;
+    --red-light: #fdecea;
+    --amber: #D4820A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'proxima-nova', sans-serif;
+    background: var(--forest);
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: #061b17 !important;
+    border-bottom: 1px solid rgba(0,107,86,0.3);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+
+  .logo img {
+    height: 38px;
+    width: auto;
+    display: block;
+    filter: brightness(1) drop-shadow(0 0 1px rgba(255,255,255,0.1));
+  }
+
+  nav { display: flex; gap: 4px; }
+
+  .nav-btn {
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--gray-400);
+    font-family: 'proxima-nova', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .nav-btn:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+  .nav-btn.active { color: #7fd4c0; background: rgba(0,107,86,0.2); }
+
+  /* ── PAGES ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--forest) 0%, #0a2820 60%, #0d3028 100%);
+    padding: 80px 2rem 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,107,86,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,107,86,0.2);
+    border: 1px solid rgba(0,107,86,0.4);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #7fd4c0;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .hero-eyebrow span { width: 6px; height: 6px; background: var(--green-light); border-radius: 50%; animation: pulse 2s infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'Barlow', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 16px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: #7fd4c0;
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    color: var(--gray-400);
+    max-width: 520px;
+    margin: 0 auto 40px;
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--forest);
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+
+  .hero-cta:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(191,144,0,0.3); }
+
+  /* ── TIMELINE STRIP ── */
+  .timeline-strip {
+    background: #0a2820;
+    border-top: 1px solid rgba(0,107,86,0.2);
+    border-bottom: 1px solid rgba(0,107,86,0.2);
+    padding: 28px 2rem;
+  }
+
+  .timeline-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tl-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    max-width: 200px;
+    position: relative;
+  }
+
+  .tl-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -50%; top: 16px;
+    width: 100%; height: 1px;
+    background: rgba(0,107,86,0.3);
+    z-index: 0;
+  }
+
+  .tl-dot {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--forest);
+    border: 2px solid var(--gray-600);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 8px;
+    position: relative; z-index: 1;
+    font-size: 12px; font-weight: 700;
+    color: var(--gray-400);
+  }
+
+  .tl-step.active .tl-dot {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--white);
+    box-shadow: 0 0 0 4px rgba(0,107,86,0.25);
+  }
+
+  .tl-label { font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+  .tl-step.active .tl-label { color: #7fd4c0; }
+  .tl-date { font-size: 12px; color: var(--gray-600); }
+  .tl-step.active .tl-date { color: var(--gray-400); }
+
+  /* ── SECTIONS ── */
+  .section { max-width: 1100px; margin: 0 auto; padding: 60px 2rem; }
+
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+
+  .section-title { font-family: 'Barlow', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; color: var(--white); margin-bottom: 12px; }
+
+  .section-desc { color: var(--gray-400); font-size: 15px; max-width: 580px; line-height: 1.65; margin-bottom: 40px; }
+
+  /* ── TIER CARDS ── */
+  .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 48px; }
+
+  .tier-card {
+    background: #0a2820;
+    border: 1px solid rgba(0,107,86,0.2);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tier-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .tier-card.l3::before { background: linear-gradient(90deg, #E74C3C, #C0392B); }
+  .tier-card.l2::before { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+  .tier-card.l1::before { background: linear-gradient(90deg, #7fd4c0, var(--green-light)); }
+  .tier-card:hover { border-color: rgba(0,107,86,0.4); transform: translateY(-2px); }
+
+  .tier-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 100px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .l3 .tier-badge { background: rgba(231,76,60,0.15); color: #E74C3C; }
+  .l2 .tier-badge { background: rgba(191,144,0,0.15); color: var(--gold-light); }
+  .l1 .tier-badge { background: rgba(0,107,86,0.2); color: #7fd4c0; }
+
+  .tier-card h3 { font-family: 'Barlow', sans-serif; font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .tier-card p { font-size: 13px; color: var(--gray-400); line-height: 1.55; margin-bottom: 20px; }
+
+  .tier-meta { display: flex; justify-content: space-between; padding-top: 16px; border-top: 1px solid rgba(0,107,86,0.15); }
+  .tier-meta-item { text-align: center; }
+  .tier-meta-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray-600); margin-bottom: 4px; }
+  .tier-meta-value { font-size: 16px; font-weight: 700; color: var(--white); }
+
+  /* ── ELIGIBILITY ── */
+  .elig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 48px; }
+  @media (max-width: 600px) { .elig-grid { grid-template-columns: 1fr; } }
+
+  .elig-card { background: #0a2820; border: 1px solid rgba(0,107,86,0.2); border-radius: 12px; padding: 24px; }
+  .elig-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(0,107,86,0.2); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 12px; }
+  .elig-card h4 { font-weight: 700; font-size: 15px; color: var(--white); margin-bottom: 6px; }
+  .elig-card p { font-size: 13px; color: var(--gray-400); line-height: 1.55; }
+
+  /* ── DIFFERENCE BANNER ── */
+  .diff-banner {
+    background: rgba(191,144,0,0.08);
+    border: 1px solid rgba(191,144,0,0.2);
+    border-left: 3px solid var(--gold);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 48px;
+  }
+  .diff-banner .diff-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); margin-bottom: 8px; }
+  .diff-banner p { font-size: 14px; color: var(--gray-400); line-height: 1.65; }
+  .diff-banner p strong { color: var(--white); }
+
+  /* ── FORM ── */
+  .form-wrap { background: #0a2820; border: 1px solid rgba(0,107,86,0.2); border-radius: 20px; padding: 40px; max-width: 720px; margin: 0 auto; }
+
+  .form-section-title { font-family: 'Barlow', sans-serif; font-size: 20px; font-weight: 700; color: var(--white); padding-bottom: 16px; border-bottom: 1px solid rgba(0,107,86,0.15); margin-bottom: 24px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  @media (max-width: 580px) { .form-row { grid-template-columns: 1fr; } }
+
+  .form-group { margin-bottom: 16px; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  label { display: block; font-size: 13px; font-weight: 600; color: var(--gray-400); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.05em; }
+  label .req { color: var(--gold); margin-left: 3px; }
+
+  input, select, textarea {
+    width: 100%;
+    background: var(--forest);
+    border: 1px solid rgba(0,107,86,0.25);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: 'proxima-nova', sans-serif;
+    font-size: 14px;
+    color: var(--white);
+    transition: all 0.2s;
+    outline: none;
+  }
+
+  input::placeholder, textarea::placeholder { color: var(--gray-600); }
+  input:focus, select:focus, textarea:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(0,107,86,0.15); }
+  select option { background: #0a2820; color: var(--white); }
+  textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+
+  .form-hint { font-size: 12px; color: var(--gray-600); margin-top: 5px; line-height: 1.45; }
+
+  .tier-selector { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+  @media (max-width: 520px) { .tier-selector { grid-template-columns: 1fr; } }
+
+  .tier-option {
+    border: 2px solid rgba(0,107,86,0.2);
+    border-radius: 10px; padding: 14px 10px;
+    cursor: pointer; transition: all 0.2s; text-align: center;
+  }
+  .tier-option:hover { border-color: rgba(0,107,86,0.5); }
+  .tier-option.selected { border-color: var(--green); background: rgba(0,107,86,0.1); }
+
+  .tier-opt-level { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+  .tier-opt-name { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+  .tier-opt-max { font-size: 12px; color: var(--gray-400); }
+
+  .tier-option.l3-opt .tier-opt-level { color: #E74C3C; }
+  .tier-option.l2-opt .tier-opt-level { color: var(--gold-light); }
+  .tier-option.l1-opt .tier-opt-level { color: #7fd4c0; }
+
+  .amount-preview { background: var(--forest); border: 1px solid rgba(0,107,86,0.25); border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #7fd4c0; margin-top: 8px; display: none; }
+  .amount-preview.visible { display: block; }
+
+  .submit-btn {
+    width: 100%; background: var(--green); color: var(--white);
+    padding: 16px; border-radius: 10px; border: none;
+    font-family: 'proxima-nova', sans-serif; font-weight: 700; font-size: 16px;
+    cursor: pointer; transition: all 0.2s; margin-top: 8px;
+  }
+  .submit-btn:hover { background: var(--green-light); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,107,86,0.3); }
+
+  .form-note { background: rgba(0,107,86,0.08); border: 1px solid rgba(0,107,86,0.2); border-radius: 8px; padding: 14px 16px; font-size: 13px; color: var(--gray-400); line-height: 1.55; margin-bottom: 24px; }
+  .form-note strong { color: #7fd4c0; }
+
+  /* ── SUCCESS ── */
+  .success-state { text-align: center; padding: 60px 40px; display: none; }
+  .success-state.visible { display: block; }
+  .form-content.hidden { display: none; }
+
+  .success-icon { width: 72px; height: 72px; background: rgba(0,107,86,0.15); border: 2px solid var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto 24px; }
+  .success-state h3 { font-family: 'Barlow', sans-serif; font-size: 26px; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+  .success-state p { color: var(--gray-400); font-size: 15px; max-width: 420px; margin: 0 auto 28px; line-height: 1.65; }
+  .success-id { display: inline-flex; align-items: center; gap: 8px; background: var(--forest); border: 1px solid rgba(0,107,86,0.3); border-radius: 8px; padding: 10px 20px; font-size: 14px; color: #7fd4c0; font-weight: 600; font-family: monospace; letter-spacing: 0.05em; }
+
+  /* ── COMMITTEE ── */
+  .committee-wrap { padding: 40px 2rem; max-width: 1200px; margin: 0 auto; }
+
+  .committee-login { max-width: 420px; margin: 80px auto; background: #0a2820; border: 1px solid rgba(0,107,86,0.2); border-radius: 20px; padding: 40px; text-align: center; }
+  .committee-login h2 { font-family: 'Barlow', sans-serif; font-size: 24px; color: var(--white); margin-bottom: 8px; }
+  .committee-login p { color: var(--gray-400); font-size: 14px; margin-bottom: 28px; }
+
+  .login-btn { width: 100%; background: var(--green); color: var(--white); padding: 14px; border-radius: 8px; border: none; font-family: 'proxima-nova', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; transition: all 0.2s; margin-top: 4px; }
+  .login-btn:hover { background: var(--green-light); }
+
+  .committee-dashboard { display: none; }
+  .committee-dashboard.visible { display: block; }
+
+  .dash-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
+  .dash-title { font-family: 'Barlow', sans-serif; font-size: 28px; font-weight: 700; color: var(--white); }
+  .dash-subtitle { color: var(--gray-400); font-size: 14px; margin-top: 4px; }
+
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+  @media (max-width: 700px) { .stats-row { grid-template-columns: 1fr 1fr; } }
+
+  .stat-card { background: #0a2820; border: 1px solid rgba(0,107,86,0.2); border-radius: 12px; padding: 20px; }
+  .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--gray-600); margin-bottom: 6px; }
+  .stat-value { font-size: 28px; font-weight: 700; color: var(--white); line-height: 1; }
+  .stat-sub { font-size: 12px; color: var(--gray-400); margin-top: 4px; }
+
+  .filter-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .filter-tab { padding: 7px 16px; border-radius: 100px; border: 1px solid rgba(0,107,86,0.2); background: transparent; color: var(--gray-400); font-family: 'proxima-nova', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .filter-tab:hover { border-color: rgba(0,107,86,0.4); color: var(--white); }
+  .filter-tab.active { background: rgba(0,107,86,0.15); border-color: rgba(0,107,86,0.4); color: #7fd4c0; }
+
+  .app-table { background: #0a2820; border: 1px solid rgba(0,107,86,0.2); border-radius: 16px; overflow: hidden; }
+  .app-table-head { display: grid; grid-template-columns: 2fr 1fr 1.2fr 1fr 1fr 1.4fr; gap: 16px; padding: 14px 24px; background: rgba(0,107,86,0.06); border-bottom: 1px solid rgba(0,107,86,0.15); }
+  .app-table-head span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--gray-600); }
+
+  .app-row { display: grid; grid-template-columns: 2fr 1fr 1.2fr 1fr 1fr 1.4fr; gap: 16px; padding: 16px 24px; border-bottom: 1px solid rgba(0,107,86,0.08); align-items: center; transition: background 0.15s; cursor: pointer; }
+  .app-row:hover { background: rgba(0,107,86,0.05); }
+  .app-row:last-child { border-bottom: none; }
+
+  .app-name { font-weight: 600; color: var(--white); font-size: 14px; }
+  .app-type { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+
+  .tier-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; }
+  .tier-pill.l3 { background: rgba(231,76,60,0.15); color: #E74C3C; }
+  .tier-pill.l2 { background: rgba(191,144,0,0.15); color: var(--gold-light); }
+  .tier-pill.l1 { background: rgba(0,107,86,0.2); color: #7fd4c0; }
+
+  .status-pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+  .status-pill.pending { background: rgba(212,130,10,0.15); color: #D4820A; }
+  .status-pill.approved { background: rgba(0,107,86,0.2); color: #7fd4c0; }
+  .status-pill.declined { background: rgba(192,57,43,0.15); color: #C0392B; }
+
+  .award-input { width: 90px; background: var(--forest); border: 1px solid rgba(0,107,86,0.25); border-radius: 6px; padding: 6px 10px; font-size: 13px; color: var(--white); font-family: 'proxima-nova', sans-serif; }
+  .action-btns { display: flex; gap: 6px; }
+  .btn-approve, .btn-decline { padding: 5px 12px; border-radius: 6px; border: none; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .btn-approve { background: rgba(0,107,86,0.15); color: #7fd4c0; border: 1px solid rgba(0,107,86,0.3); }
+  .btn-approve:hover { background: rgba(0,107,86,0.3); }
+  .btn-decline { background: rgba(192,57,43,0.1); color: #C0392B; border: 1px solid rgba(192,57,43,0.2); }
+  .btn-decline:hover { background: rgba(192,57,43,0.2); }
+
+  /* ── STATUS PAGE ── */
+  .status-hero { background: linear-gradient(135deg, var(--forest) 0%, #0a2820 100%); padding: 60px 2rem 40px; text-align: center; }
+
+  .status-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,107,86,0.15); border: 1px solid rgba(0,107,86,0.35); border-radius: 100px; padding: 7px 18px; font-size: 12px; font-weight: 700; color: #7fd4c0; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 20px; }
+  .status-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: #7fd4c0; animation: pulse 2s infinite; }
+
+  .status-hero h2 { font-family: 'Barlow', sans-serif; font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; color: var(--white); margin-bottom: 12px; }
+  .status-hero p { color: var(--gray-400); font-size: 16px; max-width: 480px; margin: 0 auto; line-height: 1.65; }
+
+  .timeline-full { max-width: 680px; margin: 0 auto; padding: 60px 2rem; }
+
+  .tl-item { display: flex; gap: 24px; margin-bottom: 36px; position: relative; }
+  .tl-item:not(:last-child)::before { content: ''; position: absolute; left: 19px; top: 40px; width: 2px; height: calc(100% + 0px); background: rgba(0,107,86,0.15); }
+
+  .tl-left { flex-shrink: 0; }
+  .tl-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; position: relative; z-index: 1; }
+  .tl-circle.done { background: rgba(0,107,86,0.2); border: 2px solid var(--green); }
+  .tl-circle.active { background: var(--green); border: 2px solid var(--green); box-shadow: 0 0 0 5px rgba(0,107,86,0.2); }
+  .tl-circle.upcoming { background: #0a2820; border: 2px solid rgba(0,107,86,0.2); }
+
+  .tl-right { padding-top: 8px; }
+  .tl-right .date { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--green-light); margin-bottom: 4px; }
+  .tl-circle.upcoming ~ .tl-right .date { color: var(--gray-600); }
+  .tl-right h4 { font-weight: 700; font-size: 16px; color: var(--white); margin-bottom: 5px; }
+  .tl-circle.upcoming ~ .tl-right h4 { color: var(--gray-400); }
+  .tl-right p { font-size: 13px; color: var(--gray-600); line-height: 1.55; }
+
+  .update-box { max-width: 680px; margin: 0 auto 60px; padding: 0 2rem; }
+  .update-card { background: #0a2820; border: 1px solid rgba(191,144,0,0.2); border-left: 3px solid var(--gold); border-radius: 12px; padding: 24px; }
+  .update-card .update-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold); margin-bottom: 8px; }
+  .update-card p { font-size: 15px; color: var(--gray-400); line-height: 1.65; }
+
+  @media (max-width: 900px) {
+    .app-table-head, .app-row { grid-template-columns: 2fr 1fr 1fr 1fr; }
+    .app-table-head span:nth-child(5), .app-table-head span:nth-child(6),
+    .app-row > *:nth-child(5), .app-row > *:nth-child(6) { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 48px 1.25rem 40px; }
+    .section { padding: 40px 1.25rem; }
+    .form-wrap { padding: 28px 20px; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <img src="data:image/png;base64,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" alt="BRYC Logo">
+    </div>
+    <nav>
+      <button class="nav-btn active" onclick="showPage('home')">About</button>
+      <button class="nav-btn" onclick="showPage('apply')">Apply</button>
+      <button class="nav-btn" onclick="showPage('status')">Status</button>
+      <button class="nav-btn" onclick="showPage('committee')">Committee</button>
+    </nav>
+  </div>
+</header>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-eyebrow"><span></span> Now Accepting Applications</div>
+    <h1>Financial Support for <em>BRYC Fellows</em> & Alumni</h1>
+    <p class="hero-desc">Up to $25,000 available for current Fellows and alumni facing financial hardship. Applications reviewed holistically — not first come, first served.</p>
+    <button class="hero-cta" onclick="showPage('apply')">Apply Now →</button>
+  </div>
+
+  <div class="timeline-strip">
+    <div class="timeline-inner">
+      <div class="tl-step active">
+        <div class="tl-dot">1</div>
+        <div class="tl-label">Apps Open</div>
+        <div class="tl-date">Feb 23</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">2</div>
+        <div class="tl-label">Deadline</div>
+        <div class="tl-date">Mar 3</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">3</div>
+        <div class="tl-label">Committee Review</div>
+        <div class="tl-date">Early Mar</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">4</div>
+        <div class="tl-label">Decisions Sent</div>
+        <div class="tl-date">Mid Mar</div>
+      </div>
+      <div class="tl-step">
+        <div class="tl-dot">5</div>
+        <div class="tl-label">Checks Available</div>
+        <div class="tl-date">End of Mar</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Support Tiers</div>
+    <div class="section-title">What We Fund</div>
+    <p class="section-desc">Awards are organized into three tiers based on the nature and urgency of the need. The review committee determines final award amounts within each tier.</p>
+
+    <div class="tier-grid">
+      <div class="tier-card l3">
+        <div class="tier-badge">Level 3 — Critical</div>
+        <h3>Housing, Food & Medical</h3>
+        <p>Emergency rent/mortgage, eviction prevention, food insecurity, urgent medical or dental expenses not covered by insurance.</p>
+        <div class="tier-meta">
+          <div class="tier-meta-item">
+            <div class="tier-meta-label">Max Award</div>
+            <div class="tier-meta-value">$1,000</div>
+          </div>
+          <div class="tier-meta-item">
+            <div class="tier-meta-label">Priority</div>
+            <div class="tier-meta-value">Highest</div>
+          </div>
+        </div>
+      </div>
+      <div class="tier-card l2">
+        <div class="tier-badge">Level 2 — Essential</div>
+        <h3>Child Care, Transport & Utilities</h3>
+        <p>Child care costs, reliable transportation to school or work, essential utilities including electric and gas service.</p>
+        <div class="tier-meta">
+          <div class="tier-meta-item">
+            <div class="tier-meta-label">Max Award</div>
+            <div class="tier-meta-value">$750</div>
+          </div>
+          <div class="tier-meta-item">
+            <div class="tier-meta-label">Priority</div>
+            <div class="tier-meta-value">High</div>
+          </div>
+        </div>
+      </div>
+      <div class="tier-card l1">
+        <div class="tier-badge">Level 1 — Supportive</div>
+        <h3>Non-Essential Utilities & Other</h3>
+        <p>Internet service, phone bills, school supplies, and other needs that support academic progress and stability.</p>
+        <div class="tier-meta">
+          <div class="tier-meta-item">
+            <div class="tier-meta-label">Max Award</div>
+            <div class="tier-meta-value">$500</div>
+          </div>
+          <div class="tier-meta-item">
+            <div class="tier-meta-label">Priority</div>
+            <div class="tier-meta-value">Standard</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">Who Can Apply</div>
+    <div class="section-title">Eligibility</div>
+    <p class="section-desc" style="margin-bottom:20px;">This program is open to two groups within the BRYC community.</p>
+
+    <div class="elig-grid" style="margin-bottom:28px;">
+      <div class="elig-card">
+        <div class="elig-icon">🎓</div>
+        <h4>Current Fellows (Grades 8–12)</h4>
+        <p>Active BRYC Fellows with at least 60% program attendance are eligible. Guardians may apply on behalf of their student.</p>
+      </div>
+      <div class="elig-card">
+        <div class="elig-icon">⭐</div>
+        <h4>BRYC Alumni</h4>
+        <p>All BRYC alumni are eligible regardless of graduation year. No engagement requirement applies to alumni applicants.</p>
+      </div>
+    </div>
+
+    <div class="diff-banner">
+      <div class="diff-label">ℹ️ How This Differs from the Basic Needs Grant</div>
+      <p>This financial support cycle operates differently from our standard Basic Needs Grant. <strong>We will not be collecting demographic data</strong> as part of this application, and participation does not obligate recipients to provide quotes or serve as program representatives. This is direct, flexible support for our community — plain and simple.</p>
+    </div>
+  </div>
+</div>
+
+<!-- APPLY -->
+<div id="page-apply" class="page">
+  <div class="section">
+    <div class="section-label">Application</div>
+    <div class="section-title">Apply for Support</div>
+    <p class="section-desc">Applications close <strong style="color:var(--white)">Monday, March 3 at 11:59 PM.</strong> All submissions are reviewed holistically after the deadline.</p>
+
+    <div class="form-wrap">
+      <div class="form-content">
+        <div class="form-note">
+          <strong>Note:</strong> This application is confidential and reviewed only by the BRYC Financial Support Committee. Submitting does not guarantee an award. This cycle does not require demographic data or quotes.
+        </div>
+
+        <div class="form-section-title">Your Information</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name <span class="req">*</span></label>
+            <input type="text" id="firstName" placeholder="First name" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name <span class="req">*</span></label>
+            <input type="text" id="lastName" placeholder="Last name" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email Address <span class="req">*</span></label>
+            <input type="email" id="email" placeholder="you@email.com" required>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="phone" placeholder="(225) 000-0000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>I am applying as a... <span class="req">*</span></label>
+          <select id="applicantType" onchange="updateTypeFields()">
+            <option value="">Select applicant type</option>
+            <option value="fellow-self">Current Fellow (applying for myself)</option>
+            <option value="fellow-guardian">Guardian (applying on behalf of a Fellow)</option>
+            <option value="alumni">BRYC Alumni</option>
+          </select>
+        </div>
+        <div id="fellowFields" style="display:none">
+          <div class="form-row">
+            <div class="form-group">
+              <label>School / Grade</label>
+              <input type="text" id="school" placeholder="e.g., McKinley, 11th grade">
+            </div>
+            <div class="form-group">
+              <label>BRYC Program Manager</label>
+              <input type="text" id="programManager" placeholder="Your PM's name">
+            </div>
+          </div>
+        </div>
+        <div id="alumniFields" style="display:none">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Year of Graduation</label>
+              <input type="text" id="gradYear" placeholder="e.g., 2021">
+            </div>
+            <div class="form-group">
+              <label>Current City / State</label>
+              <input type="text" id="city" placeholder="e.g., Baton Rouge, LA">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section-title" style="margin-top:32px;">Your Request</div>
+        <div class="form-group">
+          <label>What best describes your need? <span class="req">*</span></label>
+          <div class="tier-selector">
+            <div class="tier-option l3-opt" onclick="selectTier('L3')">
+              <div class="tier-opt-level">Level 3</div>
+              <div class="tier-opt-name">Housing / Food / Medical</div>
+              <div class="tier-opt-max">Up to $1,000</div>
+            </div>
+            <div class="tier-option l2-opt" onclick="selectTier('L2')">
+              <div class="tier-opt-level">Level 2</div>
+              <div class="tier-opt-name">Child Care / Transport / Utilities</div>
+              <div class="tier-opt-max">Up to $750</div>
+            </div>
+            <div class="tier-option l1-opt" onclick="selectTier('L1')">
+              <div class="tier-opt-level">Level 1</div>
+              <div class="tier-opt-name">Non-Essential / Other</div>
+              <div class="tier-opt-max">Up to $500</div>
+            </div>
+          </div>
+          <div class="amount-preview" id="amountPreview"></div>
+        </div>
+        <div class="form-group">
+          <label>Specific need / expense <span class="req">*</span></label>
+          <input type="text" id="specificNeed" placeholder="e.g., Past-due electric bill, Rent payment, Groceries">
+        </div>
+        <div class="form-group">
+          <label>Amount requested ($) <span class="req">*</span></label>
+          <input type="number" id="amountRequested" placeholder="e.g., 500" min="100" max="1000">
+          <div class="form-hint">Enter a dollar amount between $100 and the maximum for your tier.</div>
+        </div>
+        <div class="form-group">
+          <label>Tell us about your situation <span class="req">*</span></label>
+          <textarea id="situation" placeholder="Please describe what you're going through and how this support would help. The more context you provide, the better the committee can understand your need."></textarea>
+        </div>
+        <div class="form-group">
+          <label>How soon is this need? <span class="req">*</span></label>
+          <select id="urgency">
+            <option value="">Select urgency</option>
+            <option value="immediate">Immediate — within the next 7 days</option>
+            <option value="soon">Soon — within 2–3 weeks</option>
+            <option value="month">Within the next month</option>
+            <option value="flexible">Flexible timing</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Anything else the committee should know?</label>
+          <textarea id="additionalInfo" placeholder="Optional — any additional context or circumstances." style="min-height:80px;"></textarea>
+        </div>
+        <button class="submit-btn" onclick="submitApplication()">Submit Application →</button>
+      </div>
+
+      <div class="success-state" id="successState">
+        <div class="success-icon">✓</div>
+        <h3>Application Submitted</h3>
+        <p>Thank you for applying. The review committee will carefully consider all applications after the March 3 deadline. Decisions will be communicated in early March.</p>
+        <div class="success-id" id="successId">APP-2026-XXXX</div>
+        <p style="margin-top:20px;font-size:13px;">Save your application ID. Check the <a href="#" onclick="showPage('status')" style="color:#7fd4c0;">Status page</a> for program updates.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATUS -->
+<div id="page-status" class="page">
+  <div class="status-hero">
+    <div class="status-badge"><span class="dot"></span> Applications Now Open</div>
+    <h2>Program Status & Timeline</h2>
+    <p>Track where we are in the review process. Individual decision notifications will be sent by email.</p>
+  </div>
+
+  <div class="update-box">
+    <div class="update-card">
+      <div class="update-label">📣 Latest Update — February 23, 2026</div>
+      <p>The BRYC Financial Support Program is officially open! Applications are being accepted through <strong style="color:var(--white)">Monday, March 3 at 11:59 PM.</strong> Share this with any Fellow or alumni who may need support. All applications are reviewed holistically — submitting early does not affect your chances.</p>
+    </div>
+  </div>
+
+  <div class="timeline-full">
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-circle active">📋</div></div>
+      <div class="tl-right">
+        <div class="date">February 23, 2026</div>
+        <h4>Applications Open</h4>
+        <p>The program is open and accepting applications from current Fellows and all BRYC alumni.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-circle upcoming">⏰</div></div>
+      <div class="tl-right">
+        <div class="date">March 3, 2026 — 11:59 PM</div>
+        <h4>Application Deadline</h4>
+        <p>All applications must be submitted by this date. Late submissions will not be considered for this cycle.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-circle upcoming">👥</div></div>
+      <div class="tl-right">
+        <div class="date">Early March 2026</div>
+        <h4>Committee Review</h4>
+        <p>The review committee will carefully evaluate all applications holistically. No application is disadvantaged by submission time.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-circle upcoming">📬</div></div>
+      <div class="tl-right">
+        <div class="date">Mid-March 2026</div>
+        <h4>Decisions Communicated</h4>
+        <p>All applicants will be notified by email. Both approved and declined applicants will receive communication.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-circle upcoming">💰</div></div>
+      <div class="tl-right">
+        <div class="date">End of March 2026</div>
+        <h4>Checks Available</h4>
+        <p>Award checks will be available for pickup or mailing. Recipients must deposit within 30 days of issuance.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMMITTEE -->
+<div id="page-committee" class="page">
+  <div class="committee-wrap">
+    <div id="committeeLogin">
+      <div class="committee-login">
+        <div style="font-size:36px;margin-bottom:16px">🔒</div>
+        <h2>Committee Access</h2>
+        <p>This area is for the BRYC Financial Support review committee only.</p>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="committeePassword" placeholder="Enter access code" onkeydown="if(event.key==='Enter') committeeLogin()">
+        </div>
+        <button class="login-btn" onclick="committeeLogin()">Access Dashboard</button>
+        <p style="font-size:12px;color:var(--gray-600);margin-top:16px;">Contact Josh for access credentials.</p>
+      </div>
+    </div>
+
+    <div id="committeeDashboard" class="committee-dashboard">
+      <div class="dash-header">
+        <div>
+          <div class="dash-title">Review Dashboard</div>
+          <div class="dash-subtitle">Financial Support Program 2026 — Committee View</div>
+        </div>
+        <button onclick="exportCSV()" style="padding:10px 20px;background:rgba(0,107,86,0.15);border:1px solid rgba(0,107,86,0.3);border-radius:8px;color:#7fd4c0;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">↓ Export CSV</button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Total Applications</div>
+          <div class="stat-value" id="statTotal">0</div>
+          <div class="stat-sub">Submitted</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Pending Review</div>
+          <div class="stat-value" id="statPending">0</div>
+          <div class="stat-sub">Awaiting decision</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Approved</div>
+          <div class="stat-value" id="statApproved">0</div>
+          <div class="stat-sub" id="statApprovedAmt">$0 awarded</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Budget Remaining</div>
+          <div class="stat-value" id="statRemaining">$25K</div>
+          <div class="stat-sub">of $25,000</div>
+        </div>
+      </div>
+
+      <div class="filter-tabs">
+        <button class="filter-tab active" onclick="filterApps('all', this)">All</button>
+        <button class="filter-tab" onclick="filterApps('L3', this)">Level 3 — Critical</button>
+        <button class="filter-tab" onclick="filterApps('L2', this)">Level 2 — Essential</button>
+        <button class="filter-tab" onclick="filterApps('L1', this)">Level 1 — Supportive</button>
+        <button class="filter-tab" onclick="filterApps('pending', this)">Pending</button>
+        <button class="filter-tab" onclick="filterApps('approved', this)">Approved</button>
+      </div>
+
+      <div class="app-table">
+        <div class="app-table-head">
+          <span>Applicant</span>
+          <span>Tier</span>
+          <span>Need</span>
+          <span>Requested</span>
+          <span>Status</span>
+          <span>Award & Action</span>
+        </div>
+        <div id="appTableBody"></div>
+      </div>
+      <div style="margin-top:16px;font-size:12px;color:var(--gray-600);">⚠️ Demo mode — showing sample data. Connect to Formspree + Google Sheets for live submissions.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── NAV ──
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  const pages = ['home','apply','status','committee'];
+  document.querySelectorAll('.nav-btn')[pages.indexOf(page)].classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── FORM ──
+let selectedTier = null;
+const tierLimits = { L3: 1000, L2: 750, L1: 500 };
+const tierNames = { L3: 'Level 3 — Housing/Food/Medical', L2: 'Level 2 — Child Care/Transport/Utilities', L1: 'Level 1 — Non-Essential/Other' };
+
+function selectTier(tier) {
+  selectedTier = tier;
+  document.querySelectorAll('.tier-option').forEach(el => el.classList.remove('selected'));
+  const idx = { L3: 0, L2: 1, L1: 2 }[tier];
+  document.querySelectorAll('.tier-option')[idx].classList.add('selected');
+  const preview = document.getElementById('amountPreview');
+  preview.textContent = tierNames[tier] + ' selected. Maximum award: $' + tierLimits[tier].toLocaleString() + '.';
+  preview.classList.add('visible');
+  document.getElementById('amountRequested').max = tierLimits[tier];
+}
+
+function updateTypeFields() {
+  const val = document.getElementById('applicantType').value;
+  document.getElementById('fellowFields').style.display = (val === 'fellow-self' || val === 'fellow-guardian') ? 'block' : 'none';
+  document.getElementById('alumniFields').style.display = val === 'alumni' ? 'block' : 'none';
+}
+
+function generateAppId() { return 'APP-2026-' + Math.floor(1000 + Math.random() * 9000); }
+
+async function submitApplication() {
+  const required = ['firstName','lastName','email','applicantType','specificNeed','amountRequested','situation','urgency'];
+  let valid = true;
+  required.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) { el.style.borderColor = '#E74C3C'; valid = false; }
+    else el.style.borderColor = '';
+  });
+  if (!selectedTier) { alert('Please select a need level.'); valid = false; }
+  if (!valid) { alert('Please fill in all required fields.'); return; }
+
+  const appId = generateAppId();
+  const btn = document.querySelector('.submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  const formData = {
+    _subject: 'BRYC Financial Support Application — ' + appId,
+    application_id: appId,
+    first_name: document.getElementById('firstName').value,
+    last_name: document.getElementById('lastName').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    applicant_type: document.getElementById('applicantType').options[document.getElementById('applicantType').selectedIndex].text,
+    school_grade: document.getElementById('school') ? document.getElementById('school').value : '',
+    program_manager: document.getElementById('programManager') ? document.getElementById('programManager').value : '',
+    grad_year: document.getElementById('gradYear') ? document.getElementById('gradYear').value : '',
+    city: document.getElementById('city') ? document.getElementById('city').value : '',
+    need_tier: selectedTier + ' — ' + tierNames[selectedTier],
+    specific_need: document.getElementById('specificNeed').value,
+    amount_requested: document.getElementById('amountRequested').value,
+    situation: document.getElementById('situation').value,
+    urgency: document.getElementById('urgency').options[document.getElementById('urgency').selectedIndex].text,
+    additional_info: document.getElementById('additionalInfo').value
+  };
+
+  try {
+    const response = await fetch('https://formspree.io/f/mnjbbpwq', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+
+    if (response.ok) {
+      document.getElementById('successId').textContent = appId;
+      document.querySelector('.form-content').classList.add('hidden');
+      document.getElementById('successState').classList.add('visible');
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Submit Application →';
+      alert('There was an issue submitting your application. Please try again or contact BRYC directly.');
+    }
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Submit Application →';
+    alert('Network error. Please check your connection and try again.');
+  }
+}
+
+// ── COMMITTEE ──
+const COMMITTEE_PASS = 'bryc2026';
+
+function committeeLogin() {
+  const pass = document.getElementById('committeePassword').value;
+  if (pass === COMMITTEE_PASS) {
+    document.getElementById('committeeLogin').style.display = 'none';
+    document.getElementById('committeeDashboard').classList.add('visible');
+    renderTable(sampleApps);
+    updateStats();
+  } else {
+    document.getElementById('committeePassword').style.borderColor = '#E74C3C';
+    document.getElementById('committeePassword').placeholder = 'Incorrect password';
+  }
+}
+
+let sampleApps = [
+  { id:'APP-2026-1001', name:'Marcus Johnson', type:'Current Fellow', tier:'L3', need:'Past-due rent — eviction notice received', requested:1000, status:'pending', award:'' },
+  { id:'APP-2026-1002', name:'Destiny Williams', type:'BRYC Alumni', tier:'L2', need:'Child care costs — started new job', requested:600, status:'pending', award:'' },
+  { id:'APP-2026-1003', name:'Jaylen Thomas', type:'Current Fellow', tier:'L1', need:'Internet service for remote school', requested:200, status:'pending', award:'' },
+  { id:'APP-2026-1004', name:'Aaliyah Carter', type:'BRYC Alumni', tier:'L3', need:'Medical bills — ER visit', requested:850, status:'pending', award:'' },
+  { id:'APP-2026-1005', name:'DeShawn Robinson', type:'Current Fellow', tier:'L2', need:'Bus passes — transportation to school', requested:400, status:'pending', award:'' },
+];
+
+let currentFilter = 'all';
+
+function filterApps(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  let filtered = sampleApps;
+  if (['L3','L2','L1'].includes(filter)) filtered = sampleApps.filter(a => a.tier === filter);
+  else if (filter === 'pending') filtered = sampleApps.filter(a => a.status === 'pending');
+  else if (filter === 'approved') filtered = sampleApps.filter(a => a.status === 'approved');
+  renderTable(filtered);
+}
+
+function renderTable(apps) {
+  const body = document.getElementById('appTableBody');
+  if (!apps.length) { body.innerHTML = '<div style="padding:40px;text-align:center;color:var(--gray-600);font-size:14px;">No applications match this filter.</div>'; return; }
+  body.innerHTML = apps.map(app => `
+    <div class="app-row">
+      <div><div class="app-name">${app.name}</div><div class="app-type">${app.type} · ${app.id}</div></div>
+      <div><span class="tier-pill ${app.tier.toLowerCase()}">${app.tier}</span></div>
+      <div style="font-size:13px;color:var(--gray-400)">${app.need}</div>
+      <div style="font-weight:600;color:var(--white)">$${app.requested.toLocaleString()}</div>
+      <div><span class="status-pill ${app.status}">${cap(app.status)}</span></div>
+      <div class="action-btns">
+        <input class="award-input" type="number" placeholder="Award $" value="${app.award}" id="award-${app.id}" min="0" max="${tierLimits[app.tier]}">
+        <button class="btn-approve" onclick="decide('${app.id}','approved')">✓</button>
+        <button class="btn-decline" onclick="decide('${app.id}','declined')">✗</button>
+      </div>
+    </div>`).join('');
+}
+
+function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+function decide(id, decision) {
+  const app = sampleApps.find(a => a.id === id);
+  if (!app) return;
+  app.status = decision;
+  const el = document.getElementById('award-' + id);
+  app.award = el ? parseInt(el.value) || 0 : 0;
+  filterApps(currentFilter, document.querySelector('.filter-tab.active'));
+  updateStats();
+}
+
+function updateStats() {
+  const approved = sampleApps.filter(a => a.status === 'approved');
+  const awardedTotal = approved.reduce((sum, a) => sum + (a.award || 0), 0);
+  document.getElementById('statTotal').textContent = sampleApps.length;
+  document.getElementById('statPending').textContent = sampleApps.filter(a => a.status === 'pending').length;
+  document.getElementById('statApproved').textContent = approved.length;
+  document.getElementById('statApprovedAmt').textContent = '$' + awardedTotal.toLocaleString() + ' awarded';
+  document.getElementById('statRemaining').textContent = '$' + Math.round((25000 - awardedTotal)/1000) + 'K';
+}
+</script>
+</body>
+</html>
