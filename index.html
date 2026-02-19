@@ -875,7 +875,7 @@
         </div>
         <div id="appTableBody"></div>
       </div>
-      <div style="margin-top:16px;font-size:12px;color:var(--gray-600);">⚠️ Demo mode — showing sample data. Connect to Formspree + Google Sheets for live submissions.</div>
+      <div style="margin-top:16px;font-size:12px;color:var(--gray-600);">🔄 Live data from Formspree. Decisions are saved locally in this browser. Export CSV to share with the full committee.</div>
     </div>
   </div>
 </div>
@@ -975,28 +975,85 @@ async function submitApplication() {
 }
 
 // ── COMMITTEE ──
-const COMMITTEE_PASS = 'bryc2026';
+const COMMITTEE_PASS = 'BRycSpring26';
 
-function committeeLogin() {
+async function committeeLogin() {
   const pass = document.getElementById('committeePassword').value;
   if (pass === COMMITTEE_PASS) {
     document.getElementById('committeeLogin').style.display = 'none';
     document.getElementById('committeeDashboard').classList.add('visible');
-    renderTable(sampleApps);
-    updateStats();
+    await loadLiveSubmissions();
   } else {
     document.getElementById('committeePassword').style.borderColor = '#E74C3C';
     document.getElementById('committeePassword').placeholder = 'Incorrect password';
   }
 }
 
-let sampleApps = [
-  { id:'APP-2026-1001', name:'Marcus Johnson', type:'Current Fellow', tier:'L3', need:'Past-due rent — eviction notice received', requested:1000, status:'pending', award:'' },
-  { id:'APP-2026-1002', name:'Destiny Williams', type:'BRYC Alumni', tier:'L2', need:'Child care costs — started new job', requested:600, status:'pending', award:'' },
-  { id:'APP-2026-1003', name:'Jaylen Thomas', type:'Current Fellow', tier:'L1', need:'Internet service for remote school', requested:200, status:'pending', award:'' },
-  { id:'APP-2026-1004', name:'Aaliyah Carter', type:'BRYC Alumni', tier:'L3', need:'Medical bills — ER visit', requested:850, status:'pending', award:'' },
-  { id:'APP-2026-1005', name:'DeShawn Robinson', type:'Current Fellow', tier:'L2', need:'Bus passes — transportation to school', requested:400, status:'pending', award:'' },
-];
+async function loadLiveSubmissions() {
+  const body = document.getElementById('appTableBody');
+  body.innerHTML = '<div style="padding:40px;text-align:center;color:var(--gray-400);font-size:14px;">Loading submissions...</div>';
+
+  try {
+    const response = await fetch('https://api.formspree.io/api/0/forms/mnjbbpwq/submissions?page_size=100', {
+      headers: {
+        'Authorization': 'Bearer f8ad24fdad18470399350f10cf2b2b55',
+        'Accept': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('API error: ' + response.status);
+    }
+
+    const data = await response.json();
+    const submissions = data.submissions || [];
+
+    // Map Formspree submissions to our app format
+    liveApps = submissions.map(sub => {
+      const d = sub.data || sub.answers || sub;
+      // Extract tier from need_tier field
+      let tier = 'L1';
+      const tierRaw = d.need_tier || '';
+      if (tierRaw.includes('L3') || tierRaw.includes('Level 3')) tier = 'L3';
+      else if (tierRaw.includes('L2') || tierRaw.includes('Level 2')) tier = 'L2';
+
+      return {
+        id: d.application_id || sub.id || 'APP-' + sub.id,
+        name: (d.first_name || '') + ' ' + (d.last_name || ''),
+        type: d.applicant_type || '—',
+        tier: tier,
+        need: d.specific_need || '—',
+        requested: parseInt(d.amount_requested) || 0,
+        urgency: d.urgency || '—',
+        situation: d.situation || '—',
+        email: d.email || '—',
+        status: localDecisions[sub.id] || 'pending',
+        award: localAwards[sub.id] || '',
+        rawId: sub.id
+      };
+    });
+
+    if (liveApps.length === 0) {
+      body.innerHTML = '<div style="padding:40px;text-align:center;color:var(--gray-400);font-size:14px;">No submissions yet. Applications open February 23.</div>';
+      updateStatsFrom([]);
+      return;
+    }
+
+    renderTable(liveApps);
+    updateStatsFrom(liveApps);
+
+  } catch (err) {
+    console.error(err);
+    body.innerHTML = '<div style="padding:40px;text-align:center;color:#E74C3C;font-size:14px;">Could not load submissions. Check API connection.<br><small>' + err.message + '</small></div>';
+  }
+}
+
+// Persist decisions in localStorage so they survive refresh
+const localDecisions = JSON.parse(localStorage.getItem('bryc_decisions') || '{}');
+const localAwards = JSON.parse(localStorage.getItem('bryc_awards') || '{}');
+let liveApps = [];
+
+// Live data loaded from Formspree on login
 
 let currentFilter = 'all';
 
@@ -1004,10 +1061,10 @@ function filterApps(filter, btn) {
   currentFilter = filter;
   document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  let filtered = sampleApps;
-  if (['L3','L2','L1'].includes(filter)) filtered = sampleApps.filter(a => a.tier === filter);
-  else if (filter === 'pending') filtered = sampleApps.filter(a => a.status === 'pending');
-  else if (filter === 'approved') filtered = sampleApps.filter(a => a.status === 'approved');
+  let filtered = liveApps;
+  if (['L3','L2','L1'].includes(filter)) filtered = liveApps.filter(a => a.tier === filter);
+  else if (filter === 'pending') filtered = liveApps.filter(a => a.status === 'pending');
+  else if (filter === 'approved') filtered = liveApps.filter(a => a.status === 'approved');
   renderTable(filtered);
 }
 
@@ -1032,23 +1089,30 @@ function renderTable(apps) {
 function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
 function decide(id, decision) {
-  const app = sampleApps.find(a => a.id === id);
+  const app = liveApps.find(a => a.id === id);
   if (!app) return;
   app.status = decision;
   const el = document.getElementById('award-' + id);
   app.award = el ? parseInt(el.value) || 0 : 0;
+  // Persist decision
+  localDecisions[app.rawId] = decision;
+  localAwards[app.rawId] = app.award;
+  localStorage.setItem('bryc_decisions', JSON.stringify(localDecisions));
+  localStorage.setItem('bryc_awards', JSON.stringify(localAwards));
   filterApps(currentFilter, document.querySelector('.filter-tab.active'));
-  updateStats();
+  updateStatsFrom(liveApps);
 }
 
-function updateStats() {
-  const approved = sampleApps.filter(a => a.status === 'approved');
+function updateStats() { updateStatsFrom(liveApps); }
+
+function updateStatsFrom(apps) {
+  const approved = apps.filter(a => a.status === 'approved');
   const awardedTotal = approved.reduce((sum, a) => sum + (a.award || 0), 0);
-  document.getElementById('statTotal').textContent = sampleApps.length;
-  document.getElementById('statPending').textContent = sampleApps.filter(a => a.status === 'pending').length;
+  document.getElementById('statTotal').textContent = apps.length;
+  document.getElementById('statPending').textContent = apps.filter(a => a.status === 'pending').length;
   document.getElementById('statApproved').textContent = approved.length;
   document.getElementById('statApprovedAmt').textContent = '$' + awardedTotal.toLocaleString() + ' awarded';
-  document.getElementById('statRemaining').textContent = '$' + Math.round((25000 - awardedTotal)/1000) + 'K';
+  document.getElementById('statRemaining').textContent = '$' + (25000 - awardedTotal).toLocaleString();
 }
 </script>
 </body>
