@@ -875,7 +875,7 @@
         </div>
         <div id="appTableBody"></div>
       </div>
-      <div style="margin-top:16px;font-size:12px;color:var(--gray-600);">🔄 Live data from Google Sheets. Decisions saved locally in this browser. Export CSV to share with the full committee. <a href="https://docs.google.com/spreadsheets/d/15gvCr0o3aF748ugTCg24nll8pYXqBTjz_vsPeoloOTI/edit" target="_blank" style="color:var(--gold-light);margin-left:8px;">Open Sheet →</a></div>
+      <div style="margin-top:16px;font-size:12px;color:var(--gray-600);">🔄 Live data from Google Sheets. Decisions saved locally in this browser. Export CSV to share with the full committee. <a href="https://docs.google.com/spreadsheets/d/1NnDS3xsq90NpczdfiW1GrwmeFmwfA-rv5vRFIG_YrJ4/edit" target="_blank" style="color:var(--gold-light);margin-left:8px;">Open Sheet →</a></div>
     </div>
   </div>
 </div>
@@ -994,7 +994,7 @@ async function loadLiveSubmissions() {
   body.innerHTML = '<div style="padding:40px;text-align:center;color:var(--gray-400);font-size:14px;">Loading submissions...</div>';
 
   try {
-    const response = await fetch('https://docs.google.com/spreadsheets/d/15gvCr0o3aF748ugTCg24nll8pYXqBTjz_vsPeoloOTI/export?format=csv&gid=0', { mode: 'cors' });
+    const response = await fetch('https://docs.google.com/spreadsheets/d/1NnDS3xsq90NpczdfiW1GrwmeFmwfA-rv5vRFIG_YrJ4/export?format=csv&gid=0', { mode: 'cors' });
     if (!response.ok) throw new Error('Could not load sheet: ' + response.status);
 
     const csv = await response.text();
@@ -1039,7 +1039,7 @@ async function loadLiveSubmissions() {
 
   } catch (err) {
     console.error(err);
-    document.getElementById('appTableBody').innerHTML = '<div style="padding:40px;text-align:center;color:#E74C3C;font-size:14px;">Could not load submissions.<br><small>' + err.message + '</small><br><br><a href="https://docs.google.com/spreadsheets/d/15gvCr0o3aF748ugTCg24nll8pYXqBTjz_vsPeoloOTI/edit" target="_blank" style="color:var(--gold-light);">Open Google Sheet directly →</a></div>';
+    document.getElementById('appTableBody').innerHTML = '<div style="padding:40px;text-align:center;color:#E74C3C;font-size:14px;">Could not load submissions.<br><small>' + err.message + '</small><br><br><a href="https://docs.google.com/spreadsheets/d/1NnDS3xsq90NpczdfiW1GrwmeFmwfA-rv5vRFIG_YrJ4/edit" target="_blank" style="color:var(--gold-light);">Open Google Sheet directly →</a></div>';
   }
 }
 
