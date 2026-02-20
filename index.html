@@ -993,33 +993,42 @@ async function loadLiveSubmissions() {
   const body = document.getElementById('appTableBody');
   body.innerHTML = '<div style="padding:40px;text-align:center;color:var(--gray-400);font-size:14px;">Loading submissions...</div>';
 
+  const SHEET_ID = '1NnDS3xsq90NpczdfiW1GrwmeFmwfA-rv5vRFIG_YrJ4';
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`;
+
   try {
-    const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSxfLKoEy1X7fNcg-9C4xSxbnrTZsJsL0xTmxGX1aDJR4I-F2PJC2wi7Nvumha4_ZpPqFn1a-CNxQ3o/pub?output=csv', { mode: 'cors' });
+    const response = await fetch(url);
     if (!response.ok) throw new Error('Could not load sheet: ' + response.status);
 
-    const csv = await response.text();
-    const rows = csv.trim().split('\n').map(r => parseCSVRow(r));
-    if (rows.length < 2) {
-      body.innerHTML = '<div style="padding:40px;text-align:center;color:var(--gray-400);font-size:14px;">No submissions yet. Applications open February 23.</div>';
+    const text = await response.text();
+    // Google wraps the JSON in /*O_o*/ google.visualization.Query.setResponse({...});
+    const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*?)\);/)[1]);
+    const table = json.table;
+
+    if (!table || !table.rows || table.rows.length === 0) {
+      body.innerHTML = '<div style="padding:40px;text-align:center;color:var(--gray-400);font-size:14px;">No submissions yet. Check back after applications open.</div>';
       updateStatsFrom([]);
       return;
     }
 
-    const headers = rows[0].map(h => h.toLowerCase().trim().replace(/\s+/g, '_'));
+    // Extract headers
+    const headers = table.cols.map(c => (c.label || c.id).toLowerCase().trim().replace(/\s+/g, '_'));
     console.log('Sheet headers:', headers);
 
-    liveApps = rows.slice(1).filter(r => r.some(c => c.trim())).map((row, i) => {
+    liveApps = table.rows.map((row, i) => {
       const d = {};
-      headers.forEach((h, idx) => { d[h] = (row[idx] || '').trim(); });
+      headers.forEach((h, idx) => {
+        d[h] = row.c[idx] && row.c[idx].v != null ? String(row.c[idx].v).trim() : '';
+      });
 
       let tier = 'L1';
-      const tierRaw = d.need_tier || d['need/tier'] || '';
+      const tierRaw = d.need_tier || d['need/tier'] || d.tier || '';
       if (tierRaw.includes('L3') || tierRaw.includes('Level 3')) tier = 'L3';
       else if (tierRaw.includes('L2') || tierRaw.includes('Level 2')) tier = 'L2';
 
-      const rowId = d.application_id || d._id || ('row-' + i);
+      const rowId = d.application_id || ('row-' + i);
       return {
-        id: d.application_id || ('APP-' + (i+1)),
+        id: d.application_id || ('APP-' + (i + 1)),
         name: ((d.first_name || d.firstname || '') + ' ' + (d.last_name || d.lastname || '')).trim() || d.name || '—',
         type: d.applicant_type || '—',
         tier: tier,
@@ -1039,7 +1048,7 @@ async function loadLiveSubmissions() {
 
   } catch (err) {
     console.error(err);
-    document.getElementById('appTableBody').innerHTML = '<div style="padding:40px;text-align:center;color:#E74C3C;font-size:14px;">Could not load submissions.<br><small>' + err.message + '</small><br><br><a href="https://docs.google.com/spreadsheets/d/1NnDS3xsq90NpczdfiW1GrwmeFmwfA-rv5vRFIG_YrJ4/edit" target="_blank" style="color:var(--gold-light);">Open Google Sheet directly →</a></div>';
+    document.getElementById('appTableBody').innerHTML = `<div style="padding:40px;text-align:center;color:#E74C3C;font-size:14px;">Could not load submissions.<br><small>${err.message}</small><br><br><a href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit" target="_blank" style="color:var(--gold-light);">Open Google Sheet directly →</a></div>`;
   }
 }
 
