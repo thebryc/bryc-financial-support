@@ -833,7 +833,103 @@
       </div>
 
       
-      <div style="background:#0a2820;border:1px solid rgba(0,107,86,0.2);border-radius:16px;padding:28px;margin-bottom:28px;">
+      
+      <!-- Review Guidance Dropdown -->
+      <div style="margin-bottom:20px;">
+        <button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none';this.querySelector('.chevron').style.transform=this.nextElementSibling.style.display==='block'?'rotate(180deg)':'rotate(0deg)'"
+          style="width:100%;background:#0a2820;border:1px solid rgba(191,144,0,0.25);border-radius:12px;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;text-align:left;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span style="font-size:18px;">📋</span>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:white;">Review Guidance & Distribution Model</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px;">Josh's recommendations — click to expand</div>
+            </div>
+          </div>
+          <span class="chevron" style="color:var(--gold);font-size:18px;transition:transform 0.2s;">▾</span>
+        </button>
+
+        <div style="display:none;background:#0a2820;border:1px solid rgba(191,144,0,0.2);border-top:none;border-radius:0 0 12px 12px;padding:28px 28px 24px;">
+
+          <!-- Budget Buckets -->
+          <div style="margin-bottom:28px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:16px;">Distribution Model — Balanced Buckets</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+              <div style="background:rgba(191,144,0,0.08);border:1px solid rgba(191,144,0,0.2);border-radius:10px;padding:16px;">
+                <div style="font-size:11px;font-weight:700;color:var(--gold);letter-spacing:0.08em;margin-bottom:8px;">LEVEL 3</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.8);margin-bottom:10px;line-height:1.4;">Housing · Food · Medical Care</div>
+                <div style="font-size:20px;font-weight:800;color:white;">$12,000</div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px;">Max $1,000 per request</div>
+              </div>
+              <div style="background:rgba(0,107,86,0.1);border:1px solid rgba(0,107,86,0.25);border-radius:10px;padding:16px;">
+                <div style="font-size:11px;font-weight:700;color:#4db89e;letter-spacing:0.08em;margin-bottom:8px;">LEVEL 2</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.8);margin-bottom:10px;line-height:1.4;">Child Care · Transportation · Utilities</div>
+                <div style="font-size:20px;font-weight:800;color:white;">$8,000</div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px;">Max $750 per request</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:16px;">
+                <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:0.08em;margin-bottom:8px;">LEVEL 1</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.8);margin-bottom:10px;line-height:1.4;">Non-Essential Utilities · Other Needs</div>
+                <div style="font-size:20px;font-weight:800;color:white;">$5,000</div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px;">Max $500 per request</div>
+              </div>
+            </div>
+            <div style="margin-top:12px;font-size:13px;color:rgba(255,255,255,0.45);font-style:italic;">This allocation ensures we can serve people across all need levels while prioritizing the most urgent situations.</div>
+          </div>
+
+          <div style="height:1px;background:rgba(255,255,255,0.06);margin-bottom:24px;"></div>
+
+          <!-- Review Steps -->
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:18px;">Review Process</div>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+              <div style="background:var(--gold);color:#061b17;font-weight:800;font-size:13px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:white;margin-bottom:4px;">Categorization</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Review all applications and confirm the need category (L1/L2/L3) based on the applicant's dropdown selection and written description. Adjust the category if needed.</div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+              <div style="background:var(--gold);color:#061b17;font-weight:800;font-size:13px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:white;margin-bottom:4px;">Calculate Totals</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Add up all L3 requests, all L2 requests, and all L1 requests. Use the Summary tab to see totals by tier.</div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+              <div style="background:var(--gold);color:#061b17;font-weight:800;font-size:13px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:white;margin-bottom:4px;">Allocation Within Each Tier</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">
+                  <span style="color:rgba(255,255,255,0.8);font-weight:600;">If under budget:</span> Fund all requests at the requested amount (up to the tier maximum).<br><br>
+                  <span style="color:rgba(255,255,255,0.8);font-weight:600;">If over budget:</span> Team uses discretion. Options include pro-rating all requests proportionally, prioritizing by urgency/severity within the tier, capping individual amounts to fund more people, or a combination of the above.
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+              <div style="background:var(--gold);color:#061b17;font-weight:800;font-size:13px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">4</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:white;margin-bottom:4px;">Verify Eligibility</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">For current Fellows: confirm the 60% attendance requirement is met by cross-checking the <a href="https://docs.google.com/spreadsheets/d/1bZ9dqEjwqyxuCwd0sa0G9KmL_yl-Y9kXtQDd4u2lfn8/edit?gid=1049251272#gid=1049251272" target="_blank" style="color:var(--gold-light);text-decoration:underline;">fall</a> and <a href="https://docs.google.com/spreadsheets/d/1ohy5IkRgVbmoXSUEfZ6OCtEviQYsH3SjZT2G7OylCXc/edit?gid=678010017#gid=678010017" target="_blank" style="color:var(--gold-light);text-decoration:underline;">spring</a> attendance sheets before finalizing awards.</div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+              <div style="background:var(--gold);color:#061b17;font-weight:800;font-size:13px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">5</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;color:white;margin-bottom:4px;">Notify Applicants</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Send decision emails. Include pickup instructions for approved requests.</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+<div style="background:#0a2820;border:1px solid rgba(0,107,86,0.2);border-radius:16px;padding:28px;margin-bottom:28px;">
         <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:16px;">Review Principles</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
           <div style="display:flex;gap:12px;align-items:flex-start;">
