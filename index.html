@@ -493,8 +493,8 @@
     </div>
     <nav>
       <button class="nav-btn active" onclick="showPage('home')">About</button>
-      <button class="nav-btn" onclick="showPage('apply')">Apply</button>
       <button class="nav-btn" onclick="showPage('status')">Status</button>
+      <button class="nav-btn" onclick="showPage('resources')">Resources</button>
       <button class="nav-btn" onclick="showPage('committee')">Committee</button>
     </nav>
   </div>
@@ -503,10 +503,10 @@
 <!-- HOME -->
 <div id="page-home" class="page active">
   <div class="hero">
-    <div class="hero-eyebrow"><span></span> Now Accepting Applications</div>
+    <div class="hero-eyebrow" style="background:rgba(231,76,60,0.12);border-color:rgba(231,76,60,0.3);color:#e74c3c;"><span style="background:#e74c3c;animation:none;"></span> Applications Closed</div>
     <h1>Financial Support for <em>BRYC Fellows</em> & Alumni</h1>
     <p class="hero-desc">Up to $1,000 per household available for current Fellows and Alumni facing financial hardship. Applications reviewed holistically — not first come, first served.</p>
-    <button class="hero-cta" onclick="showPage('apply')">Apply Now →</button>
+
   </div>
 
   <div class="timeline-strip">
@@ -516,7 +516,7 @@
         <div class="tl-label">Apps Open</div>
         <div class="tl-date">Feb 23</div>
       </div>
-      <div class="tl-step">
+      <div class="tl-step active">
         <div class="tl-dot">2</div>
         <div class="tl-label">Deadline</div>
         <div class="tl-date">Mar 3</div>
@@ -621,7 +621,7 @@
   <div class="section">
     <div class="section-label">Application</div>
     <div class="section-title">Apply for Support</div>
-    <p class="section-desc">Applications close <strong style="color:var(--white)">Tuesday, March 3 at 11:59 PM.</strong> All submissions are reviewed holistically after the deadline.</p>
+    <p class="section-desc">Applications close <strong style="color:var(--white)">Monday, March 3 at 11:59 PM.</strong> All submissions are reviewed holistically after the deadline.</p>
 
     <div class="form-wrap">
       <div class="form-content">
@@ -750,15 +750,15 @@
 <!-- STATUS -->
 <div id="page-status" class="page">
   <div class="status-hero">
-    <div class="status-badge"><span class="dot"></span> Applications Now Open</div>
+    <div class="status-badge" style="background:rgba(231,76,60,0.12);border-color:rgba(231,76,60,0.3);color:#e74c3c;"><span class="dot" style="background:#e74c3c;animation:none;"></span> Applications Closed</div>
     <h2>Program Status & Timeline</h2>
     <p>Track where we are in the review process. Individual decision notifications will be sent by email.</p>
   </div>
 
   <div class="update-box">
-    <div class="update-card">
-      <div class="update-label">📣 Latest Update — February 23, 2026</div>
-      <p>The BRYC Financial Support Program is officially open! Applications are being accepted through <strong style="color:var(--white)">Tuesday, March 3 at 11:59 PM.</strong> Share this with any Fellow or alumni who may need support. All applications are reviewed holistically — submitting early does not affect your chances.</p>
+    <div class="update-card" id="updateCard">
+      <div class="update-label">📣 Latest Update — March 3, 2026</div>
+      <p>The application window is now closed. All submissions are under review by the BRYC Financial Support Committee. Decisions will be communicated by mid-March. <strong style="color:var(--white)">Thank you to everyone who applied.</strong></p>
     </div>
   </div>
 
@@ -1388,5 +1388,20 @@ function updateStatsFrom(apps) {
   document.getElementById('statRemaining').textContent = '$' + (25000 - awardedTotal).toLocaleString();
 }
 </script>
+
+<div id="page-resources" class="page">
+  <div class="section" style="max-width:700px;margin:0 auto;padding-top:60px;">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">Coming Soon</div>
+      <h2 style="font-size:48px;font-weight:800;color:white;line-height:1.1;margin-bottom:20px;">Community Resources</h2>
+      <p style="font-size:17px;color:rgba(255,255,255,0.55);line-height:1.7;">Once awards have been distributed, this page will connect BRYC Fellows, Alumni, and families to local resources including rental assistance, food access, health initiatives, and more. Available to everyone, regardless of whether you received a BRYC award.</p>
+    </div>
+    <div style="background:#0a2820;border:1px solid rgba(191,144,0,0.2);border-radius:16px;padding:36px;text-align:center;">
+      <div style="font-size:40px;margin-bottom:16px;">&#127807;</div>
+      <div style="font-size:18px;font-weight:700;color:white;margin-bottom:10px;">This page is being built</div>
+      <div style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.6;">Check back in late March 2026. Reach out to your BRYC program manager if you need support finding local resources in the meantime.</div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
