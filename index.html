@@ -1467,10 +1467,10 @@ function updateStatsFrom(apps) {
 }
 
 function filterResources(type) {
-  document.querySelectorAll('.res-filter').forEach(function(btn) {
+  document.querySelectorAll('#resFilterBar .res-filter').forEach(function(btn) {
     btn.classList.toggle('active', btn.dataset.filter === type);
   });
-  document.querySelectorAll('.res-card').forEach(function(card) {
+  document.querySelectorAll('#resourceGrid .res-card').forEach(function(card) {
     if (type === 'all' || card.dataset.type === type) {
       card.classList.remove('hidden');
     } else {
