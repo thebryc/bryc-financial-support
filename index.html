@@ -482,7 +482,79 @@
     .form-wrap { padding: 28px 20px; }
     .stats-row { grid-template-columns: 1fr 1fr; }
   }
-</style>
+
+  .res-filter {
+    padding: 8px 18px;
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    font-family: 'proxima-nova', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .res-filter:hover { color: white; border-color: rgba(255,255,255,0.35); }
+  .res-filter.active { background: var(--teal); color: #061b17; border-color: var(--teal); }
+
+  .res-card {
+    background: #0a2820;
+    border: 1px solid rgba(0,107,86,0.2);
+    border-radius: 14px;
+    padding: 24px 28px;
+    transition: border-color 0.2s;
+  }
+  .res-card:hover { border-color: rgba(0,107,86,0.5); }
+  .res-card.hidden { display: none; }
+
+  .res-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .res-tag {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    background: rgba(191,144,0,0.1);
+    border: 1px solid rgba(191,144,0,0.2);
+    border-radius: 100px;
+    padding: 3px 10px;
+  }
+  .res-loc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+  }
+  .res-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+  }
+  .res-org {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 12px;
+  }
+  .res-body {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+  .res-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: #7fd4c0;
+    text-decoration: none;
+  }
+  .res-link:hover { text-decoration: underline; }
+
+  </style>
 </head>
 <body>
 
@@ -502,6 +574,10 @@
 
 <!-- HOME -->
 <div id="page-home" class="page active">
+    <div style="background:rgba(191,144,0,0.1);border-bottom:1px solid rgba(191,144,0,0.2);padding:12px 24px;text-align:center;">
+      <span style="font-size:13px;color:rgba(255,255,255,0.7);">Looking for community support resources? </span>
+      <button onclick="showPage('resources')" style="background:none;border:none;font-size:13px;font-weight:700;color:var(--gold);cursor:pointer;text-decoration:underline;padding:0;">Visit our Resources page →</button>
+    </div>
   <div class="hero">
     <div class="hero-eyebrow" style="background:rgba(231,76,60,0.12);border-color:rgba(231,76,60,0.3);color:#e74c3c;"><span style="background:#e74c3c;animation:none;"></span> Applications Closed</div>
     <h1>Financial Support for <em>BRYC Fellows</em> & Alumni</h1>
@@ -521,7 +597,7 @@
         <div class="tl-label">Deadline</div>
         <div class="tl-date">Mar 3</div>
       </div>
-      <div class="tl-step">
+      <div class="tl-step active">
         <div class="tl-dot">3</div>
         <div class="tl-label">Committee Review</div>
         <div class="tl-date">Early Mar</div>
@@ -772,7 +848,7 @@
       </div>
     </div>
     <div class="tl-item">
-      <div class="tl-left"><div class="tl-circle upcoming">⏰</div></div>
+      <div class="tl-left"><div class="tl-circle active">⏰</div></div>
       <div class="tl-right">
         <div class="date">March 3, 2026 — 11:59 PM</div>
         <h4>Application Deadline</h4>
@@ -780,7 +856,7 @@
       </div>
     </div>
     <div class="tl-item">
-      <div class="tl-left"><div class="tl-circle upcoming">👥</div></div>
+      <div class="tl-left"><div class="tl-circle active">👥</div></div>
       <div class="tl-right">
         <div class="date">Early March 2026</div>
         <h4>Committee Review</h4>
@@ -1022,8 +1098,10 @@ function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
-  const pages = ['home','apply','status','committee'];
-  document.querySelectorAll('.nav-btn')[pages.indexOf(page)].classList.add('active');
+  const pages = ['home','status','resources','committee'];
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const idx = pages.indexOf(page);
+  if (idx !== -1 && navBtns[idx]) navBtns[idx].classList.add('active');
   window.scrollTo(0,0);
 }
 
@@ -1387,21 +1465,218 @@ function updateStatsFrom(apps) {
   document.getElementById('statApprovedAmt').textContent = '$' + awardedTotal.toLocaleString() + ' awarded';
   document.getElementById('statRemaining').textContent = '$' + (25000 - awardedTotal).toLocaleString();
 }
+
+function filterResources(type) {
+  document.querySelectorAll('.res-filter').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.filter === type);
+  });
+  document.querySelectorAll('.res-card').forEach(function(card) {
+    if (type === 'all' || card.dataset.type === type) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+
 </script>
 
 <div id="page-resources" class="page">
-  <div class="section" style="max-width:700px;margin:0 auto;padding-top:60px;">
+  <div class="section" style="max-width:900px;margin:0 auto;padding-top:60px;padding-bottom:80px;">
+
+    <!-- Header -->
     <div style="text-align:center;margin-bottom:48px;">
-      <div style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">Coming Soon</div>
-      <h2 style="font-size:48px;font-weight:800;color:white;line-height:1.1;margin-bottom:20px;">Community Resources</h2>
-      <p style="font-size:17px;color:rgba(255,255,255,0.55);line-height:1.7;">Once awards have been distributed, this page will connect BRYC Fellows, Alumni, and families to local resources including rental assistance, food access, health initiatives, and more. Available to everyone, regardless of whether you received a BRYC award.</p>
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">Community Support</div>
+      <h2 style="font-size:48px;font-weight:800;color:white;line-height:1.1;margin-bottom:20px;">Local Resources</h2>
+      <p style="font-size:17px;color:rgba(255,255,255,0.55);line-height:1.7;max-width:600px;margin:0 auto;">These resources are available to BRYC Fellows, Alumni, and families regardless of whether you received a BRYC award. Compiled by BRYC staff.</p>
     </div>
-    <div style="background:#0a2820;border:1px solid rgba(191,144,0,0.2);border-radius:16px;padding:36px;text-align:center;">
-      <div style="font-size:40px;margin-bottom:16px;">&#127807;</div>
-      <div style="font-size:18px;font-weight:700;color:white;margin-bottom:10px;">This page is being built</div>
-      <div style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.6;">Check back in late March 2026. Reach out to your BRYC program manager if you need support finding local resources in the meantime.</div>
+
+    <!-- Filter Tabs -->
+    <div id="resFilterBar" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px;justify-content:center;">
+      <button onclick="filterResources('all')" class="res-filter active" data-filter="all">All</button>
+      <button onclick="filterResources('Multiple Resource')" class="res-filter" data-filter="Multiple Resource">Multiple</button>
+      <button onclick="filterResources('Food')" class="res-filter" data-filter="Food">Food</button>
+      <button onclick="filterResources('Housing')" class="res-filter" data-filter="Housing">Housing</button>
+      <button onclick="filterResources('Healthcare Access')" class="res-filter" data-filter="Healthcare Access">Healthcare</button>
+      <button onclick="filterResources('Mental Health')" class="res-filter" data-filter="Mental Health">Mental Health</button>
+      <button onclick="filterResources('Utilities Assistance')" class="res-filter" data-filter="Utilities Assistance">Utilities</button>
+      <button onclick="filterResources('Legal Aid')" class="res-filter" data-filter="Legal Aid">Legal Aid</button>
+      <button onclick="filterResources('Childcare and Parenting Support')" class="res-filter" data-filter="Childcare and Parenting Support">Childcare</button>
+      <button onclick="filterResources('Education Support')" class="res-filter" data-filter="Education Support">Education</button>
     </div>
+
+    <!-- Resource Cards -->
+    <div id="resourceGrid" style="display:grid;gap:16px;">
+
+      <div class="res-card" data-type="Multiple Resource">
+        <div class="res-header"><span class="res-tag">Multiple Resource</span><span class="res-loc">EBR</span></div>
+        <div class="res-name">Office of Social Services</div>
+        <div class="res-org">City of Baton Rouge</div>
+        <div class="res-body">EBR Residents can visit OSS on Plank Road for employment, utilities, rental assistance and more.</div>
+        <a href="https://www.brla.gov/officeofsocialservices" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Multiple Resource">
+        <div class="res-header"><span class="res-tag">Multiple Resource</span><span class="res-loc">EBR</span></div>
+        <div class="res-name">United Way 211</div>
+        <div class="res-org">United Way Capital Area</div>
+        <div class="res-body">EBR residents have access to United Way 211, which will find the next available resource to meet your need for essential community services.</div>
+        <a href="https://www.unitedwayca.org/211" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Food">
+        <div class="res-header"><span class="res-tag">Food</span><span class="res-loc">Greater Baton Rouge</span></div>
+        <div class="res-name">Greater Baton Rouge Food Bank</div>
+        <div class="res-org">Greater Baton Rouge Food Bank</div>
+        <div class="res-body">BR Residents can use the find food map to find the nearest location that provides food from the Greater Baton Rouge Food Bank and their initiatives.</div>
+        <a href="https://www.brfoodbank.org" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Food">
+        <div class="res-header"><span class="res-tag">Food</span><span class="res-loc">LSU Students</span></div>
+        <div class="res-name">LSU Food Pantry</div>
+        <div class="res-org">LSU</div>
+        <div class="res-body">Current LSU students with a valid Tiger Card have access to the food pantry located in Room 108 of the Student Union.</div>
+        <a href="https://www.lsu.edu/campuslife/health/foodpantry.php" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Food">
+        <div class="res-header"><span class="res-tag">Food</span><span class="res-loc">Southern University Students</span></div>
+        <div class="res-name">Southern University Food Pantries</div>
+        <div class="res-org">Southern University A&M College</div>
+        <div class="res-body">Southern University students can visit Pinkie Thrift Hall or the Intramural Sports Complex on campus to get food from the food pantry.</div>
+        <a href="https://www.subr.edu" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Food">
+        <div class="res-header"><span class="res-tag">Food</span><span class="res-loc">Baker</span></div>
+        <div class="res-name">NCOH Food Pantry</div>
+        <div class="res-org">NCOH</div>
+        <div class="res-body">Those in Baker in need of food can visit this food pantry for the area and surrounding areas.</div>
+        <a href="https://www.ncoh.org" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Housing">
+        <div class="res-header"><span class="res-tag">Housing</span><span class="res-loc">Capital Area</span></div>
+        <div class="res-name">Capital Area Alliance for the Homeless</div>
+        <div class="res-org">MetroMorphosis</div>
+        <div class="res-body">Capital Area Residents can receive: Emergency Shelter, Transitional Housing, Permanent Housing, Case Management, Mental Health Counseling, Substance Abuse Treatment, Life Skills Training, and Employment/Job Assistance.</div>
+        <a href="https://www.caah.org" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Housing">
+        <div class="res-header"><span class="res-tag">Housing</span><span class="res-loc">Greater Baton Rouge & surrounding parishes</span></div>
+        <div class="res-name">Bishop Ott Housing Program</div>
+        <div class="res-org">St. Vincent de Paul</div>
+        <div class="res-body">People of Ascension, Assumption, East and West Baton Rouge, East and West Feliciana, Iberville, Livingston, Pointe Coupee, St. Helena, St. James, and Tangipahoa parishes can access St. Vincent de Paul for housing, clothing, healthcare, food, and ministry.</div>
+        <a href="https://www.svdpbr.com" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Healthcare Access">
+        <div class="res-header"><span class="res-tag">Healthcare</span><span class="res-loc">BR &amp; Denham Springs</span></div>
+        <div class="res-name">Open Health Care Clinic</div>
+        <div class="res-org">Open Health Care Clinic</div>
+        <div class="res-body">Provides affordable, quality medical, dental, and behavioral healthcare to everyone in Baton Rouge, Denham Springs, and surrounding areas, regardless of insurance or income status. Offers some evening and weekend hours.</div>
+        <a href="https://www.ohcc.org" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Healthcare Access">
+        <div class="res-header"><span class="res-tag">Healthcare</span><span class="res-loc">Baton Rouge</span></div>
+        <div class="res-name">Franciscan PACE</div>
+        <div class="res-org">Program of All-Inclusive Care for the Elderly</div>
+        <div class="res-body">Nonprofit health and supportive services program offering seniors an alternative to long-term care placement. Enables the aging population to live with dignity in their communities while providing family members and caregivers with professional guidance and support.</div>
+        <a href="https://www.franciscanpace.org" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Mental Health">
+        <div class="res-header"><span class="res-tag">Mental Health</span><span class="res-loc">Capital Area</span></div>
+        <div class="res-name">Capital Area Human Services</div>
+        <div class="res-org">Capital Area Human Services</div>
+        <div class="res-body">Capital Area Residents can use 10 locations to seek specific services pertaining to mental health and healthcare needs.</div>
+        <a href="https://www.cahs-louisiana.org" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Utilities Assistance">
+        <div class="res-header"><span class="res-tag">Utilities</span><span class="res-loc">East Baton Rouge</span></div>
+        <div class="res-name">Low Income Home Energy Assistance Program (LIHEAP)</div>
+        <div class="res-org">LIHEAP</div>
+        <div class="res-body">Residents may receive crisis assistance once a year with proof of income, picture ID, and social security cards for all household members, along with a bill from the utility company. Applicant must be responsible for household energy costs and have a threatening or actual interruption of service. Assistance is contingent upon funding availability.</div>
+        <a href="https://www.dcfs.louisiana.gov/page/liheap" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Multiple Resource">
+        <div class="res-header"><span class="res-tag">Multiple Resource</span><span class="res-loc">East Baton Rouge</span></div>
+        <div class="res-name">Medication &amp; Rental Assistance (CSBG)</div>
+        <div class="res-org">East Baton Rouge CSBG</div>
+        <div class="res-body">Provides a range of services to promote economic security and stability. May assist with utilities, rent/mortgage, and medication payments. Clients must bring proof of income, picture ID, social security cards for all household members, and proof of residency. Assistance is contingent upon funding availability.</div>
+        <a href="https://www.ebrpha.org" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Multiple Resource">
+        <div class="res-header"><span class="res-tag">Multiple Resource</span><span class="res-loc">Greater Baton Rouge</span></div>
+        <div class="res-name">Salvation Army</div>
+        <div class="res-org">Salvation Army</div>
+        <div class="res-body">GBR residents can use multiple Salvation Army locations for food access, clothing access, youth programs, and recovery programs.</div>
+        <a href="https://www.salvationarmyusa.org" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Multiple Resource">
+        <div class="res-header"><span class="res-tag">Multiple Resource</span><span class="res-loc">EBR &amp; surrounding parishes</span></div>
+        <div class="res-name">Redstick CARES</div>
+        <div class="res-org">Redstick CARES</div>
+        <div class="res-body">EBR and the surrounding nine parishes have access to the food pantry, counseling, support groups, and more.</div>
+        <a href="https://www.redstickcares.org" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Multiple Resource">
+        <div class="res-header"><span class="res-tag">Multiple Resource</span><span class="res-loc">All Louisiana</span></div>
+        <div class="res-name">American Red Cross: Disaster Relief &amp; Recovery</div>
+        <div class="res-org">American Red Cross</div>
+        <div class="res-body">For those located in Louisiana looking for aid in disaster recovery or any other needed resource like shelter, military family support, and more.</div>
+        <a href="https://www.redcross.org" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Multiple Resource">
+        <div class="res-header"><span class="res-tag">Multiple Resource</span><span class="res-loc">Everywhere</span></div>
+        <div class="res-name">Find Help</div>
+        <div class="res-org">findhelp.org</div>
+        <div class="res-body">Search for resources based on your specific needs — from healthcare to housing to food. Enter your zip code to find what is available near you.</div>
+        <a href="https://www.findhelp.org" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Legal Aid">
+        <div class="res-header"><span class="res-tag">Legal Aid</span><span class="res-loc">Louisiana</span></div>
+        <div class="res-name">Louisiana Workforce Commission / LAWorks</div>
+        <div class="res-org">LAWorks</div>
+        <div class="res-body">Louisiana Residents can use this organization to find legal aid and workforce solutions.</div>
+        <a href="https://www.laworks.net" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Legal Aid">
+        <div class="res-header"><span class="res-tag">Legal Aid</span><span class="res-loc">Southeast Louisiana</span></div>
+        <div class="res-name">Southeast Louisiana Legal Services</div>
+        <div class="res-org">SLLS</div>
+        <div class="res-body">Provides free legal aid to residents of: Ascension, Assumption, East Baton Rouge, East Feliciana, Iberville, Jefferson, Lafourche, Livingston, Orleans, Plaquemines, Pointe Coupee, St. Bernard, St. Charles, St. Helena, St. James, St. Tammany, St. John the Baptist, Tangipahoa, Terrebonne, Washington, West Baton Rouge, and West Feliciana parishes.</div>
+        <a href="https://slls.org" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Childcare and Parenting Support">
+        <div class="res-header"><span class="res-tag">Childcare &amp; Parenting</span><span class="res-loc">Baton Rouge</span></div>
+        <div class="res-name">Big Buddy</div>
+        <div class="res-org">Big Buddy Program</div>
+        <div class="res-body">Students from the following schools qualify for childcare and parenting support: Gardere Initiative, Glen Oaks, Highland Elementary, Northdale, Superintendent&apos;s Academy, Progress Elementary, St. Francis Xavier.</div>
+        <a href="https://www.bigbuddyprogram.org" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+      <div class="res-card" data-type="Education Support">
+        <div class="res-header"><span class="res-tag">Education Support</span><span class="res-loc">East Baton Rouge</span></div>
+        <div class="res-name">EBR Schools Hardship Form</div>
+        <div class="res-org">East Baton Rouge Parish School System</div>
+        <div class="res-body">The hardship waiver can be filled out and given to a school administrator. This may cover class fees or school fees at a child&apos;s school.</div>
+        <a href="https://www.ebrschools.org" target="_blank" class="res-link">Visit Website →</a>
+      </div>
+
+    </div><!-- end resource grid -->
   </div>
 </div>
 </body>
-</html>
